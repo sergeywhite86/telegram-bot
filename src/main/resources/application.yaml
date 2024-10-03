@@ -10,5 +10,5 @@ spring:
     change-log: classpath:db/liquibase/changelog-master.yml
     enabled: true
 
-telegram.bot.token: 7595193557:AAGHOGVzGMeSZHjfjxdQEilg2mCcBqMxQ9M
+telegram.bot.token: 
 interval-in-cron: 0 0/1 * * * *
