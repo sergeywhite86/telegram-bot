@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import pro.sky.telegrambot.entity.Task;
 import pro.sky.telegrambot.repository.TaskRepository;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -24,9 +25,16 @@ public class SchedulerService {
   private final TelegramBot bot;
 
   @Scheduled(cron = "${interval-in-cron}")
-  public void schedule() {
+  public void scheduleSendTask() {
     log.info("Scheduling tasks");
     getTasks().forEach(task -> bot.execute(new SendMessage(task.getUserId(),task.getMessage())));
+  }
+
+  @Scheduled(cron = "59 59 23 * * *")
+  @Transactional
+  public void scheduleCleanTask() {
+    log.info("Scheduling clean tasks");
+    repository.deleteByTimeArriveBefore(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES));
   }
 
   private List<Task> getTasks(){

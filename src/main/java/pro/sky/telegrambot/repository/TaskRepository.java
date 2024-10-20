@@ -11,4 +11,5 @@ import java.util.List;
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
     List<Task> findByTimeArrive(LocalDateTime localDateTime);
+    void deleteByTimeArriveBefore(LocalDateTime localDateTime);
 }

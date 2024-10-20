@@ -35,9 +35,11 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
             if (input.equals("/start")) {
                 telegramBot.execute(new SendMessage(update.message().chat().id(),
                         "Введите заметку в формате:01.01.2022 20:00 Сделать домашнюю работу"));
-            } else taskService.save(update.message().chat().id(), input);
+            } else {
+                taskService.save(update.message().chat().id(), input);
+                log.info("Task save");
+            }
         });
         return UpdatesListener.CONFIRMED_UPDATES_ALL;
     }
-
 }
